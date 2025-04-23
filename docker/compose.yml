@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  express-app:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: express-app
+    ports:
+      - "3001:3001"
+    expose:
+      - "3001"
+
+  nginx-server:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "80:80"
+      # - "443:443" # SSL — enable later
+    volumes:
+      - ./nginx/templates/default.conf.template:/etc/nginx/templates/default.conf.template
+      - ./public_html:/usr/share/nginx/html:ro
+    environment:
+      - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.template
+    depends_on:
+      - express-app
