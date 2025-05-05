@@ -1,0 +1,14 @@
+<h1>Upcoming Events</h1>
+<ul>
+  {{#each events}}
+    <li>
+      <strong>{{this.title}}</strong> - {{this.category}} ({{this.date}}) at {{this.location}}<br>
+      <form action="/events/{{@index}}/delete" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+      <a href="/events/{{@index}}/edit">Edit</a>
+    </li>
+  {{/each}}
+</ul>
+
+<a href="/events/create">Create New Event</a>
